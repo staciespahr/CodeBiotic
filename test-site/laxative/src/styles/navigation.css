@@ -1,0 +1,151 @@
+/* Navigation Bar */
+.navbar {
+  width: 100%;
+  background-color: #8B1E2D;
+  border-bottom: 1px solid #6B1421;
+}
+
+/* Navigation Container */
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Website Title */
+.navbar-brand a {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Navigation Links */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navbar-links.buttons-page-links .theme-switch {
+  order: -1;
+}
+
+.navbar-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Hover Effect */
+.navbar-links a:hover {
+  color: #ffe0e0;
+  text-decoration: underline;
+}
+
+/* Keyboard Accessibility */
+.navbar a:focus-visible,
+.navbar button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Theme Toggle Button */
+.navbar .theme-toggle {
+  position: static;
+  background-color: #ffffff;
+  color: #8B1E2D;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.navbar .theme-toggle:hover {
+  background-color: #f5e5e7;
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .navbar-links {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Light/Dark Mode Toggle */
+.navbar .theme-switch {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Toggle Track */
+.navbar .switch-track {
+  width: 50px;
+  height: 26px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+}
+
+/* Toggle Circle */
+.navbar .switch-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #8B1E2D;
+  border-radius: 50%;
+  transform: translateX(0);
+  transition: transform 0.25s ease;
+}
+
+/* Dark Mode Position */
+[data-theme="dark"] .navbar .switch-thumb {
+  transform: translateX(24px);
+}
+
+/* Keyboard Focus */
+.navbar .theme-switch:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+  border-radius: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar .switch-thumb {
+    transition: none;
+  }
+}
+
+/* Sun and Moon Icons - Always White */
+.navbar .theme-icon {
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0 6px;
+}
+
+/* Keep Icons White in Dark Mode */
+[data-theme="dark"] .navbar .theme-icon {
+  color: #ffffff;
+}

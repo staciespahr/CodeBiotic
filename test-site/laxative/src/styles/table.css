@@ -1,0 +1,68 @@
+table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  color: var(--text);
+  border-collapse: collapse;
+  background-color: transparent;
+}
+
+thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--border);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+th,
+td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+tbody + tbody {
+  border-top: 2px solid var(--border);
+}
+
+tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.table-bordered {
+  border: 1px solid var(--border);
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid var(--border);
+}
+
+/* Priority/status row colors for any table */
+table tr.not-included-row {
+  background-color: rgb(249, 186, 186);
+}
+
+table tr.not-included-row:hover {
+  background-color: rgb(250, 176, 176);
+}
+
+table tr.medium-priority-row {
+  background-color: rgb(235, 229, 112);
+}
+
+table tr.medium-priority-row:hover {
+  background-color: rgb(218, 211, 73);
+}
+
+table tr.high-priority-row {
+  background-color: rgb(176, 239, 163);
+}
+
+table tr.high-priority-row:hover {
+  background-color: rgb(151, 220, 137);
+}

@@ -1,0 +1,266 @@
+/* Counter Button */
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+
+  color: var(--accent);
+  background: var(--accent-bg);
+
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.counter:hover {
+  border-color: var(--accent-border);
+}
+
+.counter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Links */
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a.no-underline {
+  text-decoration: none;
+}
+
+a.no-underline:hover {
+  text-decoration: none;
+}
+
+/* Text */
+.left-aligned {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+p.left-aligned {
+  line-height: 1.2;
+}
+
+h4.left-aligned {
+  margin-bottom: 0.5rem;
+}
+
+.wcag-issues-callout {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid #1565c0;
+  border-radius: 6px;
+  background-color: rgba(21, 101, 192, 0.08);
+  color: var(--text-h);
+  text-align: left;
+}
+
+.wcag-issues-callout p {
+  margin-bottom: 0.5rem;
+}
+
+.wcag-issues-callout ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.workflow-image {
+  display: block;
+  width: 10000px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1.5rem;
+}
+
+.application-form {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 32rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.form-row label {
+  text-align: left;
+}
+
+.checkbox-group-row {
+  align-items: start;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 18rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.other-input {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.form-row input,
+.form-row div {
+  width: 100%;
+  max-width: 18rem;
+}
+
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 1.25rem;
+  row-gap: 0.9rem;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  width: 100%;
+  max-width: 32rem;
+  box-sizing: border-box;
+}
+
+fieldset > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 1.25rem;
+  row-gap: 0.9rem;
+}
+
+.btn-green,
+.btn-blue,
+.btn-red,
+.btn-yellow,
+.btn-dark,
+.btn-small,
+.btn-large,
+.btn-tooltip,
+.btn-icon,
+.btn-focus-trap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-green {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+.btn-blue {
+  background-color: #1565c0;
+  color: #fff;
+}
+
+.btn-red {
+  background-color: #c62828;
+  color: #fff;
+}
+
+.btn-yellow {
+  background-color: #f9a825;
+  color: #111;
+}
+
+.btn-dark {
+  background-color: #212121;
+  color: #fff;
+}
+
+.btn-small {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.btn-large {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.1rem;
+}
+
+.btn-tooltip {
+  position: relative;
+  background-color: #efefef;
+  color: #111;
+}
+
+.btn-icon {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  font-size: 1.25rem;
+  background-color: #eee;
+  color: #111;
+}
+
+.btn-focus-trap:focus {
+  outline: 3px solid #f44336;
+  outline-offset: 2px;
+}
+
+.smu-logo {
+  width: 500px;
+  height: auto;
+  display: block;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.theme-toggle:hover {
+  background: var(--social-bg);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
