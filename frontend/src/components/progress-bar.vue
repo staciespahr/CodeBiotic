@@ -24,115 +24,121 @@ const steps = [
         :key="index"
         class="progress-step"
         :class="{
-          active: currentStep === index + 1,
-          completed: currentStep > index + 1
+            active: currentStep === index + 1,
+            completed: currentStep > index + 1,
+            'line-completed': currentStep > index + 1
         }"
         :aria-current="currentStep === index + 1 ? 'step' : undefined"
-      >
+    >
         <div class="step-circle">
-          {{ index + 1 }}
+            {{ index + 1 }}
         </div>
 
         <span class="step-label">
-          {{ step }}
+            {{ step }}
         </span>
-      </li>
+    </li>
     </ol>
-  </div>
+</div>
 </template>
 
 <style scoped>
 .progress-container {
-  width: 100%;
-  max-width: 1150px;
-  margin: 40px auto 25px;
+    width: 100%;
+    max-width: 1150px;
+    margin: 40px auto 25px;
 }
 
 .progress-steps {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .progress-step {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  color: #53658e;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    color: #53658e;
 }
 
 /* Connecting lines */
 .progress-step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 20px;
-  left: calc(50% + 30px);
-  width: calc(100% - 60px);
-  height: 2px;
-  background-color: #dce4f7;
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: calc(50% + 30px);
+    width: calc(100% - 60px);
+    height: 2px;
+    background-color: #dce4f7;
+}
+
+/* Purple lines between completed steps */
+.progress-step.line-completed:not(:last-child)::after {
+    background-color: #5946f5;
 }
 
 /* Numbered circles */
 .step-circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background-color: #eef2ff;
-  border: 2px solid #dce4f7;
-  color: #53658e;
-  font-size: 18px;
-  font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #eef2ff;
+    border: 2px solid #dce4f7;
+    color: #53658e;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 /* Step labels */
 .step-label {
-  margin-top: 10px;
-  font-size: 16px;
-  text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
 }
 
 /* Active step */
 .progress-step.active .step-circle {
-  background-color: #5946f5;
-  border-color: #5946f5;
-  color: white;
+    background-color: #5946f5;
+    border-color: #5946f5;
+    color: white;
 }
 
 .progress-step.active .step-label {
-  color: #5946f5;
-  font-weight: 600;
+    color: #5946f5;
+    font-weight: 600;
 }
 
 /* Completed steps */
 .progress-step.completed .step-circle {
-  background-color: #5946f5;
-  border-color: #5946f5;
-  color: white;
+    background-color: #5946f5;
+    border-color: #5946f5;
+    color: white;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 600px) {
-  .step-circle {
+.step-circle {
     width: 34px;
     height: 34px;
     font-size: 14px;
-  }
+}
 
-  .step-label {
+.step-label {
     font-size: 11px;
-  }
+}
 
-  .progress-step:not(:last-child)::after {
+.progress-step:not(:last-child)::after {
     top: 16px;
     left: calc(50% + 22px);
     width: calc(100% - 44px);
-  }
+}
 }
 </style>
