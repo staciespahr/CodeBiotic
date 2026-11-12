@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import ProgressBar from './progress-bar.vue'
 import FileUpload from './file-upload.vue'
 import AnalysisProgress from './analysis-progress.vue'
+import ReviewIssues from './review-issues.vue'
 
 const currentStep = ref(1)
 const selectedFile = ref<File | null>(null)
@@ -18,6 +19,14 @@ function handleStartAnalysis(file: File) {
 
 function handleCancelAnalysis() {
   currentStep.value = 1
+}
+
+function handleViewCorrections(issue: {
+	id: number
+	name: string
+}) {
+	console.log('Selected issue:', issue)
+	currentStep.value = 4
 }
 </script>
 
@@ -48,6 +57,12 @@ function handleCancelAnalysis() {
       :file="selectedFile"
       @cancel="handleCancelAnalysis"
     />
+
+	<!-- Step 3: Review Issues -->
+	<ReviewIssues
+		v-if="currentStep === 3"
+		@view-corrections="handleViewCorrections"
+	/>
 
   </div>
 </template>
