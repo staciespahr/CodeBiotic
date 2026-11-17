@@ -2,59 +2,72 @@
 import { computed, ref } from 'vue'
 
 const props = defineProps<{
-file: File
+	file: File
+	isOrganizing: boolean
+	organizationComplete: boolean
+	errorMessage: string
 }>()
 
 const emit = defineEmits<{
-(e: 'cancel'): void
+	(e: 'cancel'): void
 }>()
 
-// Current analysis progress
-const currentStage = ref(2)
-
 const stages = [
-{
-	title: 'File uploaded successfully',
-	description: 'Your file has been received and is ready for analysis.'
-},
-{
-	title: 'Organizing code (backend process)',
-	description: 'Your file is being organized into sections.'
-},
-{
-	title: 'Analyzing for accessibility issues',
-	description: 'Scanning the organized code for WCAG compliance issues.'
-},
-{
-	title: 'Generating suggested corrections',
-	description: 'Creating recommended fixes for identified issues.'
-},
-{
-	title: 'Finalizing results',
-	description: 'Preparing the analysis results for review.'
-}
+	{
+		title: 'File uploaded successfully',
+		description: 'Your file has been received and is ready for analysis.'
+	},
+	{
+		title: 'Organizing code (backend process)',
+		description: 'Your file is being organized into sections.'
+	},
+	{
+		title: 'Analyzing for accessibility issues',
+		description: 'Scanning the organized code for WCAG compliance issues.'
+	},
+	{
+		title: 'Generating suggested corrections',
+		description: 'Creating recommended fixes for identified issues.'
+	},
+	{
+		title: 'Finalizing results',
+		description: 'Preparing the analysis results for review.'
+	}
 ]
 
-// Calculate progress percentage
+// Stages completed by the backend
+const completedStages = computed(() => {
+	return props.organizationComplete ? 2 : 1
+})
+
+// Current active stage
+const currentStage = computed(() => {
+	if (props.errorMessage) return -1
+	if (props.isOrganizing) return 1
+	if (props.organizationComplete) return -1
+	return 1
+})
+
+// Progress based on completed stages
 const progress = computed(() =>
-Math.round(((currentStage.value + 1) / stages.length) * 100)
+	Math.round((completedStages.value / stages.length) * 100)
 )
 
 // File information
 const fileType = computed(() =>
-props.file.name.split('.').pop()?.toUpperCase() || ''
+	props.file.name.split('.').pop()?.toUpperCase() || ''
 )
 
 const fileSize = computed(() =>
-`${(props.file.size / 1024).toFixed(1)} KB`
+	`${(props.file.size / 1024).toFixed(1)} KB`
 )
 
 const uploadedAt = ref(
-new Date().toLocaleString()
+	new Date().toLocaleString()
 )
 
 function cancelAnalysis() {
-emit('cancel')
+	emit('cancel')
 }
 </script>
 
@@ -97,44 +110,60 @@ emit('cancel')
 		</span>
 		</div>
 
-		<p class="progress-description">
-			{{ stages[currentStage]?.description }}
+		<p class="progress-description" aria-live="polite">
+			<template v-if="errorMessage">
+				{{ errorMessage }}
+			</template>
+
+			<template v-else-if="organizationComplete">
+				HTML organization complete. Accessibility analysis has not started.
+			</template>
+
+			<template v-else>
+				{{ stages[1]?.description }}
+			</template>
 		</p>
 
 		<!-- Analysis Stages -->
 		<div class="stages-card">
-		<div
-			v-for="(stage, index) in stages"
-			:key="index"
-			class="stage-item"
-			:class="{ 'stage-active': currentStage === index }"
-		>
-			<!-- Status Icon -->
 			<div
-			class="stage-icon"
-			:class="{
-				completed: index < currentStage,
-				active: index === currentStage,
-				pending: index > currentStage
-			}"
-			aria-hidden="true"
+				v-for="(stage, index) in stages"
+				:key="index"
+				class="stage-item"
+				:class="{
+				'stage-active': currentStage === index && !errorMessage
+				}"
 			>
-			<span v-if="index < currentStage">✓</span>
-			<span v-else-if="index === currentStage" class="spinner"></span>
-			</div>
+				<!-- Status Icon -->
+				<div
+				class="stage-icon"
+				:class="{
+					completed: index < completedStages,
+					active: index === currentStage && !errorMessage,
+					pending: index >= completedStages && index !== currentStage
+				}"
+				aria-hidden="true"
+				>
+					<span v-if="index < completedStages">✓</span>
+
+					<span
+						v-else-if="index === currentStage && !errorMessage"
+						class="spinner"
+					></span>
+				</div>
 
 			<!-- Stage Text -->
 			<div>
-			<h2 class="stage-title">
-				{{ stage.title }}
-			</h2>
+				<h2 class="stage-title">
+					{{ stage.title }}
+				</h2>
 
-			<p class="stage-description">
-				{{ stage.description }}
-			</p>
+				<p class="stage-description">
+					{{ stage.description }}
+				</p>
 			</div>
 		</div>
-		</div>
+	</div>
 
 		<!-- Cancel Button -->
 		<button

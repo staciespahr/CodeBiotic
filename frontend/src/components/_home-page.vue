@@ -10,16 +10,72 @@ import OutputFile from './output-file.vue'
 const currentStep = ref(1)
 const selectedFile = ref<File | null>(null)
 
+// progress for analysis
+const isOrganizing = ref(false)
+const organizedHtml = ref<unknown>(null)
+const analysisError = ref('')
+let uploadController: AbortController | null = null
+
 function handleFileSelected(file: File | null) {
   selectedFile.value = file
 }
 
-function handleStartAnalysis(file: File) {
-  selectedFile.value = file
-  currentStep.value = 2
+async function handleStartAnalysis(file: File) {
+	selectedFile.value = file
+	currentStep.value = 2
+
+	isOrganizing.value = true
+	organizedHtml.value = null
+	analysisError.value = ''
+
+	try {
+		const formData = new FormData()
+		formData.append('file', file)
+
+		uploadController = new AbortController()
+		const response = await fetch('http://127.0.0.1:8000/upload', {
+			method: 'POST',
+			body: formData,
+			signal: uploadController.signal
+		})
+
+		if (!response.ok) {
+			throw new Error(`Upload failed: ${response.status}`)
+		}
+
+		const result = await response.json()
+
+		// Save the actual organizer output
+		organizedHtml.value = result.organized
+
+		console.log('HTML organization complete:', result)
+
+	} catch (error) {
+		if (error instanceof Error && error.name === 'AbortError') {
+			return
+		}
+
+		analysisError.value =
+		error instanceof Error ? error.message : 'Something went wrong.'
+
+		console.error('Backend error:', error)
+
+		} finally {
+			isOrganizing.value = false
+	}
 }
 
 function handleCancelAnalysis() {
+  // Cancel the backend request
+  uploadController?.abort()
+  uploadController = null
+
+  // Reset analysis state
+  isOrganizing.value = false
+  organizedHtml.value = null
+  analysisError.value = ''
+
+  // Return to upload page
   currentStep.value = 1
 }
 
@@ -74,12 +130,15 @@ function handleNewAnalysis() {
       @start-analysis="handleStartAnalysis"
     />
 
-    <!-- Step 2: Analyze -->
-    <AnalysisProgress
-      v-if="currentStep === 2 && selectedFile"
-      :file="selectedFile"
-      @cancel="handleCancelAnalysis"
-    />
+   <!-- Step 2: Analyze -->
+	<AnalysisProgress
+		v-if="currentStep === 2 && selectedFile"
+		:file="selectedFile"
+		:is-organizing="isOrganizing"
+		:organization-complete="organizedHtml !== null"
+		:error-message="analysisError"
+		@cancel="handleCancelAnalysis"
+	/>
 
 	<!-- Step 3: Review Issues -->
 	<ReviewIssues
